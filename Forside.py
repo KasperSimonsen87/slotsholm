@@ -105,7 +105,6 @@ def generate_response(txt, formaal, input_text):
 
     human_template = """
     Du skal nu lave en kort opsummering af teksten nedenfor indkapslet i triple backquotes (```) ved hjælp af Slotsholmmetoden.
-    .
     Ifølge Slotsholmmetoden skal opsummeringen MAKSIMALT fylde 3 sætninger:
     - Den første sætning er kantsætningen og skal besvare hvad tekstens ærinde er. Hvad er den konkrete anledning til at man henvender sig? Er et produkt klar til godkendelse? Skal vi reagere på noget, der er sket? Skal vi forholde os til en ny tanke, har vi produceret en ny analyse, eller har vi forfattet endnu en rutinemæssig statusrapport?  
     - Derefter følger kontekstsætningen. Kontekstsætningen kvalificerer kantsætningen med en vurdering af hvad er der på spil. Den fortæller i hvilket lys kantsætningen skal ses. Sætningen flager graden af business as usual, opmærksomhedsbehov eller drama.
@@ -146,6 +145,8 @@ if formaal == 'Beslutte':
     input_text = st.text_input('Angiv kort hvad læseren skal beslutte')
 elif formaal == 'Handle':
     input_text = st.text_input('Angiv kort hvad læseren skal gøre')
+elif formaal == 'Vide':
+    input_text = 'Punktet er alene til orientering.'
 
 # Fileuploader
 uploaded_file = st.file_uploader("Vælg notat", 
@@ -165,6 +166,6 @@ if submitted:
 
 if len(result):
     st.header('Udkast til forklæde')
-    st.info(result[0])
+    st.info(result)
 
 # Resultat
