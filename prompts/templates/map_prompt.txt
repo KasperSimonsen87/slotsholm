@@ -1,0 +1,3 @@
+Skriv et koncist resumé af følgende tekst:
+"{text}"
+RESUMÉ:

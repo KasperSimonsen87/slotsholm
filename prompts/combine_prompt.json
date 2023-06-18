@@ -1,0 +1,5 @@
+{
+    "_type": "prompt",
+    "input_variables": ["text"],
+    "template_path": "prompts/templates/combine_prompt.txt"
+}

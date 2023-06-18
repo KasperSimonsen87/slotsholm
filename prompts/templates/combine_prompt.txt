@@ -1,0 +1,5 @@
+Du vil få en serie af resumeer af en længere tekst. Resumeerne er pakket ind i triple backticks (```)
+Dit mål er at give et langt og fyldigt resumé af teksterne.
+
+```{text}```
+GIV ET LANGT OG FYLDIGT RESUMÉ:

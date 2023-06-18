@@ -4,6 +4,7 @@ import io
 from langchain.chat_models import ChatOpenAI
 from langchain.chains.summarize import load_summarize_chain
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.prompts import load_prompt
 from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
 import os
@@ -51,29 +52,10 @@ def generate_response(txt, formaal):
     docs = text_splitter.create_documents([txt])
     
     # Map-prompt til at lave præliminære summaries
-    map_prompt = """
-    Skriv et koncist resumé af følgende tekst:
-    "{text}"
-    RESUMÉ:
-    """
-    map_prompt_template = PromptTemplate(template=map_prompt, input_variables=["text"])
-
+    map_prompt_template = load_prompt("prompts/map_prompt.json")
     
-    # Lav prompt
-    combine_prompt = """
-    Lav et resumé af den følgende tekst afgrænset af triple backquotes.
-    Resuméet skal overholde følgende regler:
-    Der skal være fire afsnit: Indledning, Indstilling, Baggrund og Videre proces. Afsnittene skal være formateret som overskrifter via Markdown (.md).
-    Under Videre proces skal det fremgå, om modtageren på baggrund af resumeet skal {formaal}.
-    ```{text}```
-    RESUMÉ AF TEKSTEN:
-    """
-
     # Kombiner prompt
-    combine_prompt_template = PromptTemplate(template=combine_prompt, 
-                                             input_variables=["text", "formaal"]
-                                             )
-    print(combine_prompt_template)
+    combine_prompt_template = load_prompt("prompts/combine_prompt.json")
     
     # Text summarization
     summary_chain = load_summarize_chain(llm=llm,
