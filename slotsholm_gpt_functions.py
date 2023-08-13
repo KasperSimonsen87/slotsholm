@@ -1,3 +1,4 @@
+import os
 from dotenv import load_dotenv
 from langchain.chat_models import ChatOpenAI
 from langchain.chains.summarize import load_summarize_chain
@@ -9,6 +10,7 @@ from langchain.chains import LLMChain
 
 # Indlæs miljøvariabler (secrets) - streamlit online
 load_dotenv()
+openai_api_key = os.environ.get("openai_api_key")
 
 def generate_summary(txt):
     # Instantier sprogmodel
