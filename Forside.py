@@ -8,13 +8,23 @@ import time
 
 st.set_page_config(
     page_title="Forklæd-o-matic",
-    page_icon="📄",
+    page_icon="✅",
     layout="wide",
 )
 
 with st.sidebar:
+    st.header("Om værktøjet")
+    st.write("Værktøjet ...")
+
+    st.header("Indstillinger")
+
+    model = st.radio(
+    "Vælg model",
+    ('gpt-3.5-turbo-16k', 'gpt-4-32k'))
+
+
     temperature = st.slider(
-    'Select temperature',
+    'Vælg "temperature"',
     0.0, 1.0, 0.0, 0.01)
 
 
@@ -66,13 +76,20 @@ if submitted:
                 st.error("Kunne ikke tælle antal tokens")
                 sys.exit(1)
 
-        if txtLength > 10000:
+        if model == 'gpt-3.5-turbo-16k' and txtLength > 10000:
             with st.spinner('Teksten er for lang. Genererer resume som 😓'):
                 try:
                     doc = gpt.generate_summary(txt)
                 except:
                     st.error('Genereringen af resumé mislykkedes')
                     sys.exit(1)
+        elif model == 'gpt-4-32k' and txtLength > 20000:
+            with st.spinner('Teksten er for lang. Genererer resume som 😓'):
+                try:
+                    doc = gpt.generate_summary(txt)
+                except:
+                    st.error('Genereringen af resumé mislykkedes')
+                    sys.exit(1)     
         else:
             doc = txt
 
