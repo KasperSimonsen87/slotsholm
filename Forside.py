@@ -14,15 +14,10 @@ st.set_page_config(
 with st.sidebar:
     st.header("Om værktøjet")
     st.write("Dette værktøj er en wrapper til OpenAI's sprogmodeller kendt fra ChatGPT, men opsat på forhånd sådan at den tager et fast defineret input i form af et notat og spytter en tekst ud der i struktur og forhåbentlig i indhold kan bruges til at lave det tilhørende forklæde.")
-    st.write("Brugen af værktøjet er ikke gratis og trækker lige nu penge fra Kaspers private konto. GPT4-modellen er dobbelt så dyr som GPT3.5-modellen, men kan teoretisk levere et output af højere kvalitet. Den kan samtidig acceptere længere tekster uden først at skulle lave et referat af teksten til intern brug.")
+    st.write("Brugen af værktøjet er ikke gratis og trækker lige nu penge fra Kaspers private konto. ")
     st.write("Feedback sendes til [kks@ufm.dk](mailto:kks@ufm.dk)")
 
     st.header("Indstillinger")
-
-    model = st.radio(
-    "Vælg model",
-    ('gpt-3.5-turbo-16k', 'gpt-4-32k'))
-
 
     temperature = st.slider(
     'Vælg "temperature"',
@@ -77,37 +72,30 @@ if submitted:
                 st.error("Kunne ikke tælle antal tokens")
                 sys.exit(1)
 
-        if model == 'gpt-3.5-turbo-16k' and txtLength > 10000:
+        if txtLength > 10000:
             with st.spinner('Teksten er for lang. Genererer resume som 😓'):
                 try:
                     doc = gpt.generate_summary(txt)
                 except:
                     st.error('Genereringen af resumé mislykkedes')
                     sys.exit(1)
-        elif model == 'gpt-4-32k' and txtLength > 20000:
-            with st.spinner('Teksten er for lang. Genererer resume som 😓'):
-                try:
-                    doc = gpt.generate_summary(txt)
-                except:
-                    st.error('Genereringen af resumé mislykkedes')
-                    sys.exit(1)     
         else:
             doc = txt
 
         with st.spinner('Genererer kant-kontekst-konklusion 😬'):
-            kant_kontekst_konklusion = gpt.generate_kant_kontekst_konklusion(doc, formaal, formaalstekst, temperature, model)
+            kant_kontekst_konklusion = gpt.generate_kant_kontekst_konklusion(doc, formaal, formaalstekst, temperature)
             result = []
             result.append(kant_kontekst_konklusion)
             kant_kontekst_konklusion = dict(result[0])
 
         with st.spinner('Genererer sagsfremstilling 🙂'):
-            sagsfremstilling = gpt.generate_sagsfremstilling(doc, kant_kontekst_konklusion["kant_kontekst"], temperature, model)
+            sagsfremstilling = gpt.generate_sagsfremstilling(doc, kant_kontekst_konklusion["kant_kontekst"], temperature)
             result = []
             result.append(sagsfremstilling)
             sagsfremstilling = dict(result[0])
 
         with st.spinner('Genererer videre proces 😍'):
-            videre_proces = gpt.generate_videre_proces(kant_kontekst_konklusion["kant_kontekst"], sagsfremstilling["sagsfremstilling"], videre_proces_tekst, temperature, model)
+            videre_proces = gpt.generate_videre_proces(kant_kontekst_konklusion["kant_kontekst"], sagsfremstilling["sagsfremstilling"], videre_proces_tekst, temperature)
             result = []
             result.append(videre_proces)
             videre_proces = dict(result[0])
