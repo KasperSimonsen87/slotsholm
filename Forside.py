@@ -100,8 +100,6 @@ if submitted:
 
 
 if len(result):
-    download = st.button('Download forklæde', type='secondary')
-
     st.header('Kant-kontekst-konklusion')
     st.write(kant_kontekst_konklusion["kant_kontekst"], kant_kontekst_konklusion["konklusion"])
 
