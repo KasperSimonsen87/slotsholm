@@ -4,7 +4,7 @@ import slotsholm_gpt_functions as gpt
 
 import sys
 import io
-import time
+from trubrics.integrations.streamlit import FeedbackCollector
 
 st.set_page_config(
     page_title="Forklæd-o-matic",
@@ -14,7 +14,9 @@ st.set_page_config(
 
 with st.sidebar:
     st.header("Om værktøjet")
-    st.write("Værktøjet ...")
+    st.write("Dette værktøj er en wrapper til OpenAI's sprogmodeller kendt fra ChatGPT, men opsat på forhånd sådan at den tager et fast defineret input i form af et notat og spytter en tekst ud der i struktur og forhåbentlig i indhold kan bruges til at lave det tilhørende forklæde.")
+    st.write("Brugen af værktøjet er ikke gratis og trækker lige nu penge fra Kaspers private konto. GPT4-modellen er dobbelt så dyr som GPT3.5-modellen, men kan teoretisk levere et output af højere kvalitet. Den kan samtidig acceptere længere tekster uden først at skulle lave et referat af teksten til intern brug.")
+    st.write("Feedback sendes til [kks@ufm.dk](mailto:kks@ufm.dk)")
 
     st.header("Indstillinger")
 
@@ -125,3 +127,23 @@ if len(result):
 
     st.header('Videre proces')
     st.write(videre_proces["videre_proces"])
+
+    collector = FeedbackCollector(
+        component_name="default",
+        email=st.secrets["TRUBRICS_EMAIL"], # Store your Trubrics credentials in st.secrets:
+        password=st.secrets["TRUBRICS_PASSWORD"], # https://blog.streamlit.io/secrets-in-sharing-apps/
+    )
+
+    collector.st_feedback(
+        feedback_type="thumbs",
+        model=model,
+        open_feedback_label="[Optional] Var du tilfreds med svaret?",
+    )
+
+    collector.st_feedback(
+        feedback_type="textbox",
+        model=model,
+        open_feedback_label="[Optional] Anfør eventuelle kommentarer her",
+    )
+
+
