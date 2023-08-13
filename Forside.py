@@ -95,19 +95,19 @@ if submitted:
             doc = txt
 
         with st.spinner('Genererer kant-kontekst-konklusion 😬'):
-            kant_kontekst_konklusion = gpt.generate_kant_kontekst_konklusion(doc, formaal, formaalstekst, temperature)
+            kant_kontekst_konklusion = gpt.generate_kant_kontekst_konklusion(doc, formaal, formaalstekst, temperature, model)
             result = []
             result.append(kant_kontekst_konklusion)
             kant_kontekst_konklusion = dict(result[0])
 
         with st.spinner('Genererer sagsfremstilling 🙂'):
-            sagsfremstilling = gpt.generate_sagsfremstilling(doc, kant_kontekst_konklusion["kant_kontekst"], temperature)
+            sagsfremstilling = gpt.generate_sagsfremstilling(doc, kant_kontekst_konklusion["kant_kontekst"], temperature, model)
             result = []
             result.append(sagsfremstilling)
             sagsfremstilling = dict(result[0])
 
         with st.spinner('Genererer videre proces 😍'):
-            videre_proces = gpt.generate_videre_proces(kant_kontekst_konklusion["kant_kontekst"], sagsfremstilling["sagsfremstilling"], videre_proces_tekst, temperature)
+            videre_proces = gpt.generate_videre_proces(kant_kontekst_konklusion["kant_kontekst"], sagsfremstilling["sagsfremstilling"], videre_proces_tekst, temperature, model)
             result = []
             result.append(videre_proces)
             videre_proces = dict(result[0])
