@@ -4,7 +4,6 @@ import slotsholm_gpt_functions as gpt
 
 import sys
 import io
-#from trubrics.integrations.streamlit import FeedbackCollector
 
 st.set_page_config(
     page_title="Forklæd-o-matic",
@@ -127,25 +126,3 @@ if len(result):
 
     st.header('Videre proces')
     st.write(videre_proces["videre_proces"])
-
-    
-    '''
-    collector = FeedbackCollector(
-        component_name="default",
-        email=st.secrets["TRUBRICS_EMAIL"], # Store your Trubrics credentials in st.secrets:
-        password=st.secrets["TRUBRICS_PASSWORD"], # https://blog.streamlit.io/secrets-in-sharing-apps/
-    )
-
-    collector.st_feedback(
-        feedback_type="thumbs",
-        model=model,
-        open_feedback_label="[Optional] Var du tilfreds med svaret?",
-    )
-
-    collector.st_feedback(
-        feedback_type="textbox",
-        model=model,
-        open_feedback_label="[Optional] Anfør eventuelle kommentarer her",
-    )
-    '''
-
