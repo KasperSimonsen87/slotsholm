@@ -47,7 +47,7 @@ def generate_summary(txt):
 def generate_kant_kontekst_konklusion(doc, formaal, formaalstekst, usertemperature, model):
     # Instantier sprogmodel
     llm = ChatOpenAI(temperature=usertemperature, 
-                        model_name='gpt-4-32k',
+                        model_name=model,
                         openai_api_key=openai_api_key)
 
     # Dette er en LLMChain til at lave kant og kontekst-sætningen ift. Slotsholmsmetoden med et notat som input.
@@ -113,7 +113,7 @@ def generate_kant_kontekst_konklusion(doc, formaal, formaalstekst, usertemperatu
 def generate_sagsfremstilling(doc, kant_kontekst, usertemperature, model):
     # Instantier sprogmodel
     llm = ChatOpenAI(temperature=usertemperature, 
-                        model_name='gpt-4-32k',
+                        model_name=model,
                         openai_api_key=openai_api_key)
 
 
@@ -145,7 +145,7 @@ def generate_sagsfremstilling(doc, kant_kontekst, usertemperature, model):
 def generate_videre_proces(kant_kontekst, sagsfremstilling, videre_proces_tekst, usertemperature, model):
     # Instantier sprogmodel
     llm = ChatOpenAI(temperature=usertemperature, 
-                        model_name='gpt-4-32k',
+                        model_name=model,
                         openai_api_key=openai_api_key)
 
 
